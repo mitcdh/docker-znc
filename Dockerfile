@@ -1,9 +1,7 @@
-# version 1.6.1-2
-# docker-version 1.11.1
-FROM ubuntu:15.04
-MAINTAINER Jim Myhrberg "contact@jimeh.me"
+FROM ubuntu:xenial
+MAINTAINER Mitchell Hewes <me@mitcdh.com>
 
-ENV ZNC_VERSION 1.6.1
+ENV ZNC_VERSION 1.6.5
 
 RUN apt-get update \
     && apt-get install -y sudo wget build-essential libssl-dev libperl-dev \
