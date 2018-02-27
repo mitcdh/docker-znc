@@ -19,7 +19,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /src* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN useradd znc
 ADD docker-entrypoint.sh /entrypoint.sh
 ADD znc.conf.default /znc.conf.default
 RUN chmod 644 /znc.conf.default

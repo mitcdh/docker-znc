@@ -3,6 +3,26 @@
 # Options.
 DATADIR="/znc-data"
 
+PUID=${PUID:-1000}
+PGID=${PGID:-1000}
+
+# Create a group for our gid if required
+if [ ! $(getent group znc) ]; then
+	echo "creating znc group for gid ${PGID}"
+	groupadd --gid ${PGID} --non-unique znc >/dev/null 2>&1
+fi
+
+# Create a user for our uid if required
+if [ ! $(getent passwd znc) ]; then
+	echo "creating znc group for uid ${PUID}"
+	useradd --gid ${PGID} --non-unique --comment "ZNC Bouncer Daemon" \
+	 --home-dir "${DATADIR}" --create-home \
+	 --uid ${PUID} znc >/dev/null 2>&1
+
+	echo "taking ownership of /znc-data for znc"
+	chown ${PUID}:${PGID} "${DATADIR}"
+fi
+
 # Build modules from source.
 if [ -d "${DATADIR}/modules" ]; then
   # Store current directory.
