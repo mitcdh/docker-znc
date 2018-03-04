@@ -51,7 +51,7 @@ fi
 
 # Set trustedproxy in znc.conf
 if [ ! -z "${TRUSTED_PROXY+x}" ]; then
-	if [ ! $(getent passwd znc) ]; then
+	if [ ! $(getent ahostsv4 ${TRUSTED_PROXY}) ]; then
 		trusted_proxy_ip=`getent ahostsv4 ${TRUSTED_PROXY} | awk 'NR==1{ print $1 }'`
 		echo "Setting TrustedProxy to ip ${trusted_proxy_ip} from domain ${TRUSTED_PROXY}"
 		sed -i "s/TrustedProxy = .*/TrustedProxy = ${trusted_proxy_ip}/" "${DATADIR}/configs/znc.conf"
