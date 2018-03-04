@@ -8,7 +8,7 @@ RUN apt-get update \
                pkg-config swig3.0 libicu-dev ca-certificates \
     && mkdir -p /src \
     && cd /src \
-    && wget "http://znc.in/releases/archive/znc-${ZNC_VERSION}.tar.gz" \
+    && wget "https://znc.in/releases/archive/znc-${ZNC_VERSION}.tar.gz" \
     && tar -zxf "znc-${ZNC_VERSION}.tar.gz" \
     && cd "znc-${ZNC_VERSION}" \
     && ./configure --disable-ipv6 \
