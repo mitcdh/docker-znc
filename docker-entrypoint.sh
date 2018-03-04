@@ -49,6 +49,17 @@ if [ ! -f "${DATADIR}/configs/znc.conf" ]; then
   cp /znc.conf.default "${DATADIR}/configs/znc.conf"
 fi
 
+# Set trustedproxy in znc.conf
+if [ ! -z "${TRUSTED_PROXY+x}" ]; then
+	if [ ! $(getent passwd znc) ]; then
+		trusted_proxy_ip=`getent ahostsv4 ${TRUSTED_PROXY} | awk 'NR==1{ print $1 }'`
+		echo "Setting TrustedProxy to ip ${trusted_proxy_ip} from domain ${TRUSTED_PROXY}"
+		sed -i "s/TrustedProxy = .*/TrustedProxy = ${trusted_proxy_ip}/" "${DATADIR}/configs/znc.conf"
+	else
+		echo "Failed looking up TrustedProxy from domain ${TRUSTED_PROXY}"
+	fi
+fi
+
 # Make sure $DATADIR is owned by znc user. This effects ownership of the
 # mounted directory on the host machine too.
 echo "Setting necessary permissions..."

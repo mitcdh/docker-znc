@@ -16,6 +16,7 @@ Version = 1.6.5
         SSL = false
 </Listener>
 LoadModule = webadmin
+TrustedProxy = 127.0.0.1
 
 <User admin>
         Pass       = sha256#00793765305dfc3e7bba28267fe9d9e2c721ebef4e20f3a89720265a89ee6a4f#N!lgZM8S.HZ4zH?)vFoW#
