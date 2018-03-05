@@ -7,13 +7,13 @@ PUID=${PUID:-1000}
 PGID=${PGID:-1000}
 
 # Create a group for our gid if required
-if [ ! $(getent group znc) ]; then
+if ! getent group znc >/dev/null; then
 	echo "creating znc group for gid ${PGID}"
 	groupadd --gid ${PGID} --non-unique znc >/dev/null 2>&1
 fi
 
 # Create a user for our uid if required
-if [ ! $(getent passwd znc) ]; then
+if ! getent passwd znc >/dev/null; then
 	echo "creating znc group for uid ${PUID}"
 	useradd --gid ${PGID} --non-unique --comment "ZNC Bouncer Daemon" \
 	 --home-dir "${DATADIR}" --create-home \
@@ -51,8 +51,8 @@ fi
 
 # Set trustedproxy in znc.conf
 if [ ! -z "${TRUSTED_PROXY+x}" ]; then
-	if [ ! $(getent ahostsv4 ${TRUSTED_PROXY}) ]; then
-		trusted_proxy_ip=`getent ahostsv4 ${TRUSTED_PROXY} | awk 'NR==1{ print $1 }'`
+	if getent ahostsv4 "${TRUSTED_PROXY}" >/dev/null; then
+		trusted_proxy_ip=`getent ahostsv4 "${TRUSTED_PROXY}" | awk 'NR==1{ print $1 }'`
 		echo "Setting TrustedProxy to ip ${trusted_proxy_ip} from domain ${TRUSTED_PROXY}"
 		sed -i "s/TrustedProxy = .*/TrustedProxy = ${trusted_proxy_ip}/" "${DATADIR}/configs/znc.conf"
 	else
