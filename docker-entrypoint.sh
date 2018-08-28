@@ -14,7 +14,7 @@ fi
 
 # Create a user for our uid if required
 if ! getent passwd znc >/dev/null; then
-	echo "creating znc group for uid ${PUID}"
+	echo "creating znc user for uid ${PUID}"
 	useradd --gid ${PGID} --non-unique --comment "ZNC Bouncer Daemon" \
 	 --home-dir "${DATADIR}" --create-home \
 	 --uid ${PUID} znc >/dev/null 2>&1
